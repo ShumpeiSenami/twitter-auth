@@ -1,6 +1,6 @@
 # twitter-auth
 ## これはtwitter の認証を実装することを学ぶためのアプリケーションです。
-
+### $ cd workspace
 ### $ express --view=pug twitter-auth
 ### $ cd twitter-auth/
 ### $ npm install

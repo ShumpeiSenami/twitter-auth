@@ -33,6 +33,7 @@ app.use(session({
 }));
 
 // passport自体の初期化
+app.use(session({ secret:'41364e69455ebbdc', resave: false, saveUninitialized: false}));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -52,20 +53,33 @@ passport.serializeUser(function(user, done){
   done(null, user);
 });
 // セッションから復元 routerのreq.userからの利用可能
-passport.deserializeUser(function(user, done){
-  done(null, user);
+passport.deserializeUser(function(obj, done){
+  done(null, obj);
 });
 
 
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.get('/auth/twitter', passport.authenticate('twitter'));
+app.get('/auth/twitter',
+  passport.authenticate('twitter'),
+  function(req, res){
+  });
+
 app.get('/auth/twitter/callback',
   passport.authenticate('twitter', { failureRedirect: 'auth_failed' }),
   function (req, res) {
-    res.redirect('/users');
+    res.redirect('/');
   });
+
+  app.get('/login', function(req, res){
+    res.render('login');
+  });
+
+  app.get('/logout', function(req, res){
+    req.logout();
+    res.redirect('/');
+  })
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
