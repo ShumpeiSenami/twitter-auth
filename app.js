@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // ユーザー情報をセッションに保存するために初期化 (twitter,github 共通)
 app.use(session({
-  secret: 'secrete-key',
+  secret: 'secret-key',
   resave: true,
   saveUninitialized: true
 }));
